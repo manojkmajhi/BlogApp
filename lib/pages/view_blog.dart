@@ -1,61 +1,55 @@
+import 'package:blog_app/model/blog_model.dart';
 import 'package:flutter/material.dart';
 
-class ViewBlogScreen extends StatefulWidget {
-  const ViewBlogScreen({super.key});
+class ViewBlogScreen extends StatelessWidget {
+  final List<Blog> blogs;
 
-  @override
-  State<ViewBlogScreen> createState() => _ViewBlogScreenState();
-}
+  const ViewBlogScreen({super.key, required this.blogs});
 
-class _ViewBlogScreenState extends State<ViewBlogScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 243, 244, 245),
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: const Text('View Blog', style: TextStyle(color: Colors.white)),
+        title: const Text('All Blogs', style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Blog Title:',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'My First Blog Post',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'Blog Content:',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'This is where the blog content will be displayed. '
-                  'You can load it from a database or API later.',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ],
+      body: blogs.isEmpty
+          ? const Center(
+              child: Text("No blogs available", style: TextStyle(fontSize: 16)),
+            )
+          : ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: blogs.length,
+              itemBuilder: (context, index) {
+                final blog = blogs[index];
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  elevation: 3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          blog.title,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          blog.content,
+                          style: const TextStyle(fontSize: 15),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          ),
-        ],
-      ),
     );
   }
 }

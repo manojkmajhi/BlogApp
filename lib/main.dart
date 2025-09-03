@@ -1,7 +1,6 @@
-  import 'package:blog_app/pages/add_blog.dart';
 import 'package:blog_app/pages/home.dart';
-import 'package:blog_app/pages/view_blog.dart';
   import 'package:flutter/material.dart';
+
 
   void main() {
     runApp(const MyApp());
